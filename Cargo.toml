@@ -1,0 +1,10 @@
+[package]
+name = "solana-cookbook-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenv = "0.15"
+solana-client = "2.1.5"
+solana-sdk = "2.1.5"
+chrono = "0.4.38"
