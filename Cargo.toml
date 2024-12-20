@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15"
+chrono = "0.4.38"
 solana-client = "2.1.5"
 solana-sdk = "2.1.5"
-chrono = "0.4.38"
+solana-pubkey = "=2.1.5"
+solana-signature = "2.1.5"
