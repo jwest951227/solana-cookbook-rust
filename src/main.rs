@@ -1,7 +1,9 @@
 use dotenv::dotenv;
 use solana_cookbook_rust::utils::Logger;
 use solana_cookbook_rust::{
-    jwest_accounts::{create_account::create_account, generate_pda::generate_pda},
+    jwest_accounts::{
+        create_account::create_account, generate_pda::generate_pda, get_balance::get_balance,
+    },
     jwest_development::{
         create_nonblocking_rpc_client::create_nonblocking_rpc_client,
         create_rpc_client::create_rpc_client, get_test_sol::get_test_sol,
@@ -38,7 +40,25 @@ async fn main() {
     // _run_create_account_section(&logger).await;
 
     /* PDA Generating Section */
-    _run_generate_pda_section();
+    // _run_generate_pda_section();
+
+    /* Get Balance of the Account Section */
+    _run_get_balance_section(&logger).await;
+}
+
+async fn _run_get_balance_section(logger: &Logger) {
+    let rpc_https_url = env::var("RPC_HTTPS_URL").expect("RPC_HTTPS_URL not set");
+
+    let client =
+        create_nonblocking_rpc_client(rpc_https_url.clone(), CommitmentConfig::processed());
+    logger.log(format!(
+        "Solana Devnet RPC Connection is healthy: {}",
+        client.get_health().await.is_ok()
+    ));
+    let account_pubkey: Pubkey =
+        Pubkey::from_str_const("BvPM3MYQWfT3GR73nJ5Boyrj7F8PH6DpAGzvL32Sdq47");
+
+    logger.log(get_balance(client, &account_pubkey).await.to_string());
 }
 
 fn _run_generate_pda_section() {
