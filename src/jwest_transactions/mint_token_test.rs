@@ -1,15 +1,15 @@
 // https://0xksure.medium.com/mint-tokens-on-solana-using-the-rust-sdk-3b05b07ca842
 #[cfg(test)]
 mod tests {
-    use solana_program_test::{ tokio, ProgramTest };
+    use solana_program_test::{tokio, ProgramTest};
     use solana_sdk::{
-        program_pack::Pack,
-        signature::Keypair,
-        signer::Signer,
-        system_instruction,
+        program_pack::Pack, signature::Keypair, signer::Signer, system_instruction,
         transaction::Transaction,
     };
-    use spl_token::{ id, instruction, state::{ Account, Mint } };
+    use spl_token::{
+        id, instruction,
+        state::{Account, Mint},
+    };
 
     #[tokio::test]
     async fn test_initialize_mint() {
@@ -27,7 +27,7 @@ mod tests {
             &mint_account.pubkey(),
             mint_rent,
             Mint::LEN as u64,
-            token_program
+            token_program,
         );
 
         let token_mint_a_tx = instruction::initialize_mint(
