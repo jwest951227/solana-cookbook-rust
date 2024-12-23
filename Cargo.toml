@@ -10,6 +10,8 @@ solana-client = "2.1.5"
 solana-sdk = "2.1.5"
 solana-pubkey = "=2.1.5"
 solana-signature = "2.1.5"
+solana-program-test = "2.1.5"
+spl-token = "=7.0.0"
 solana-account-decoder-client-types = "2.1.5"
 tokio-stream = "0.1.17"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
