@@ -1,6 +1,7 @@
 use dotenv::dotenv;
 use solana_cookbook_rust::utils::Logger;
 use solana_cookbook_rust::{
+    jwest_accounts::create_account::create_account,
     jwest_development::{
         create_nonblocking_rpc_client::create_nonblocking_rpc_client,
         create_rpc_client::create_rpc_client, get_test_sol::get_test_sol,
@@ -31,7 +32,45 @@ async fn main() {
     // _run_sol_send_tx_section(&logger).await;
 
     /* Sol Send Transactions Section */
-    run_add_priority_fee_section(&logger).await;
+    // _run_add_priority_fee_section(&logger).await;
+
+    /* Account Creating Transactions Section */
+    _run_create_account_section(&logger).await;
+}
+
+async fn _run_create_account_section(logger: &Logger) {
+    let dev_rpc_https_url = env::var("DEVNET_RPC_HTTPS_URL").expect("DEVNET_RPC_HTTPS_URL not set");
+
+    let client =
+        create_nonblocking_rpc_client(dev_rpc_https_url.clone(), CommitmentConfig::processed());
+    logger.log(format!(
+        "Solana Devnet RPC Connection is healthy: {}",
+        client.get_health().await.is_ok()
+    ));
+
+    let from_keypair: Keypair = Keypair::from_base58_string(
+        "JZjXrsKPVsFmgezJF6W3qyNmYkY7NzEAmAw1EWVkpAZV56haKwP7wvqzi4WocQK5NNs49XfHJQsfqqN29jDg3Tr",
+    );
+    let new_account: Keypair = Keypair::new();
+    let space: usize = 0;
+    let latest_blockhash = client.get_latest_blockhash().await.unwrap();
+
+    match create_account(
+        &client,
+        &from_keypair,
+        &new_account,
+        space,
+        latest_blockhash,
+    )
+    .await
+    {
+        Ok(signature) => {
+            logger.log(format!("Account Creating Transaction is: {}", signature));
+        }
+        Err(e) => {
+            logger.log(e.to_string());
+        }
+    }
 }
 
 async fn _run_development_section(logger: &Logger) {
@@ -95,7 +134,7 @@ async fn _run_sol_send_tx_section(logger: &Logger) {
     }
 }
 
-async fn run_add_priority_fee_section(logger: &Logger) {
+async fn _run_add_priority_fee_section(logger: &Logger) {
     let dev_rpc_https_url = env::var("DEVNET_RPC_HTTPS_URL").expect("DEVNET_RPC_HTTPS_URL not set");
 
     let client =
