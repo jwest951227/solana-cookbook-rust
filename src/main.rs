@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use solana_cookbook_rust::utils::Logger;
 use solana_cookbook_rust::{
-    jwest_accounts::create_account::create_account,
+    jwest_accounts::{create_account::create_account, generate_pda::generate_pda},
     jwest_development::{
         create_nonblocking_rpc_client::create_nonblocking_rpc_client,
         create_rpc_client::create_rpc_client, get_test_sol::get_test_sol,
@@ -35,7 +35,14 @@ async fn main() {
     // _run_add_priority_fee_section(&logger).await;
 
     /* Account Creating Transactions Section */
-    _run_create_account_section(&logger).await;
+    // _run_create_account_section(&logger).await;
+
+    /* PDA Generating Section */
+    _run_generate_pda_section();
+}
+
+fn _run_generate_pda_section() {
+    generate_pda();
 }
 
 async fn _run_create_account_section(logger: &Logger) {
