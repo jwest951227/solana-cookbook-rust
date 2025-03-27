@@ -5,5 +5,5 @@ All of the methods corresponds directly to the ones of [here](https://solana.com
 [Donate here]: 
 > Solana Address 
 ```
-Ez7F9HP9F5XZ5SXmHeAkdPiPp6mfPU5wPjCHCYCfK3ZP
+6vT7nrqtbXDWVc8cRUtifxgfDZi19aW7qhcZg2hSepwb
 ```
